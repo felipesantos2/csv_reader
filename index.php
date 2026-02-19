@@ -2,7 +2,7 @@
 
 use app\CsvDto;
 
-require __DIR__ .'/Converter.php';
+require __DIR__ .'/CsvDto.php';
 
 $comercios = [];
 
