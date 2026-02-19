@@ -1,6 +1,6 @@
 <?php
 
-use app\CSVConverter;
+use app\CsvDto;
 
 require __DIR__ .'/Converter.php';
 
@@ -12,24 +12,50 @@ if (count($fileContent) == 0) {
     exit('Arquivo vazio');
 }
 
-foreach($fileContent as $content) {
-    $linha = explode(';', $content);
-    $comercios[] = new CSVConverter(
-        nome:$linha[0],
-        categoria:$linha[4], 
-        telefone:$linha[1], 
-        endereco:$linha[2], 
-        link:$linha[3], 
-        horario:$linha[5]
-    );
+if (empty(trim($fileContent[0]))) {
+    exit('Primeira linha vazia!');
 }
 
+//----------------------------------------------------
+//----------------------------------------------------
+$rows = [];
+$fileContent = array_slice($fileContent, 1); // novo array sem a primeira linha(cabeçalho do csv)
+foreach($fileContent as $content) {
+    $rows[] = trim($content);
+}
+
+// converte os dados para classe
+foreach($rows as $row) {
+    if(!empty($row)) { // verifica se no meio do arquivo existe linhas vazias
+        $l = explode(';', $row);
+        $nome = $l[0];
+        $categoria = $l[4];
+        $telefone = $l[1];
+        $endereco = $l[2];
+        $link = $l[3];
+        $horario = $l[5];
+    
+        $comercios[] = new CsvDto(
+            nome:$nome,
+            categoria:$categoria, 
+            telefone:$telefone, 
+            endereco:$endereco, 
+            link:$link, 
+            horario:$horario
+        );
+    }
+}
+
+//----------------------------------------------------
+//----------------------------------------------------
+
+// exibe em tela
 foreach ($comercios as $data) {
-    echo "<p>{$data->nome}</p>";
-    echo "<p>{$data->telefone}</p>";
-    echo "<p>{$data->categoria}</p>";
-    echo "<p>{$data->endereco}</p>";
-    echo "<p>{$data->horario}</p>";
-    echo "<p>{$data->link}</p>";
+    echo "<span>{$data->nome} </span>";
+    echo "<span>{$data->telefone} </span>";
+    echo "<span>{$data->categoria} </span>";
+    echo "<span>{$data->endereco} </span>";
+    echo "<span>{$data->horario} </span>";
+    echo "<span>link: {$data->link} </span>";
     echo "<hr>";
 }

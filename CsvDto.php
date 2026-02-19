@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-readonly class CSVConverter
+readonly class CsvDto
 {
     public function __construct(
         public string $nome,
