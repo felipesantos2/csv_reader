@@ -4,7 +4,7 @@ LABEL maintainer="felipesantos2"
 # https://www.docker.com/blog/docker-best-practices-using-arg-and-env-in-your-dockerfiles/
 WORKDIR /app
 
-# RUN apk update && apk upgrade
+RUN apk update && apk upgrade
 
 RUN apk add bash --no-cache \
     build-base \    
