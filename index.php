@@ -1,58 +1,64 @@
 <?php
 
+ini_set("xdebug.cli_color", 1);
+
 use app\CsvDto;
 
-require __DIR__ .'/CsvDto.php';
-
+require __DIR__ . "/CsvDto.php";
 
 $comercios = [];
 $rows = [];
 $fileContent = [];
 
-$fileContent = file('comercio.csv');
+$fileContent = file("comercio.csv");
 
 if (count($fileContent) == 0) {
-    exit('Arquivo vazio!');
+    exit("Arquivo vazio!");
 }
 
 if (empty(trim($fileContent[0]))) {
-    exit('Primeira linha vazia! A primeira linha deve possuir o cabeçalho.');
+    exit("Primeira linha vazia! A primeira linha deve possuir o cabeçalho.");
 }
 
 //----------------------------------------------------
 //----------------------------------------------------
-foreach(array_slice($fileContent, 1) as $content) { // novo array sem a primeira linha(cabeçalho do csv)
+foreach (array_slice($fileContent, 1) as $content) {
+    // novo array sem a primeira linha(cabeçalho do csv)
     $rows[] = trim($content);
 }
 
 // converte os dados para classe(DTO)
-foreach($rows as $row) {
-    if(empty($row)) { // verifica se no meio do arquivo existe linhas vazias
-        exit('Existe outra linha vazia pelo meio do arquivo.');
+foreach ($rows as $row) {
+    if (empty($row)) {
+        // verifica se no meio do arquivo existe linhas vazias
+        exit("Existe outra linha vazia pelo meio do arquivo.");
     } else {
-        $col = explode(';', $row);
+        $col = explode(";", $row);
 
-        $nome       = $col[0];
-        $categoria  = $col[4];
-        $telefone   = $col[1];
-        $endereco   = $col[2];
-        $link       = $col[3];
-        $horario    = $col[5];
+        $nome = $col[0];
+        $categoria = $col[4];
+        $telefone = $col[1];
+        $endereco = $col[2];
+        $link = $col[3];
+        $horario = $col[5];
 
         $comercios[] = new CsvDto(
-            nome:       $nome,
-            categoria:  $categoria,
-            telefone:   $telefone,
-            endereco:   $endereco,
-            link:       $link,
-            horario:    $horario
-        )
-
+            nome: $nome,
+            categoria: $categoria,
+            telefone: $telefone,
+            endereco: $endereco,
+            link: $link,
+            horario: $horario,
+        );
     }
 }
 
 //----------------------------------------------------
 //----------------------------------------------------
+
+var_dump($comercios);
+
+exit(0);
 
 // exibe em tela
 foreach ($comercios as $data) {

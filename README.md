@@ -6,3 +6,6 @@
 
 > docker run --rm csvreader php --ini | grep 'php.ini' <br>
 > docker run --rm csvreader php -i | grep 'php.ini' <br>
+
+> docker run --rm csvreader php index.php
+> docker run --rm csvreader ls

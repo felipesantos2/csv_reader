@@ -10,7 +10,7 @@ RUN apk add bash --no-cache \
     build-base \
     curl \
     git \
-    npm \
+    npm  \
     autoconf \
     linux-headers
 
@@ -25,3 +25,5 @@ RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN apk clean cache
 
 RUN pecl install xdebug-3.5.0 && docker-php-ext-enable xdebug
+
+COPY . .
