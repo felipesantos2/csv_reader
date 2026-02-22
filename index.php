@@ -4,45 +4,50 @@ use app\CsvDto;
 
 require __DIR__ .'/CsvDto.php';
 
+
 $comercios = [];
+$rows = [];
+$fileContent = [];
 
 $fileContent = file('comercio.csv');
 
 if (count($fileContent) == 0) {
-    exit('Arquivo vazio');
+    exit('Arquivo vazio!');
 }
 
 if (empty(trim($fileContent[0]))) {
-    exit('Primeira linha vazia!');
+    exit('Primeira linha vazia! A primeira linha deve possuir o cabeçalho.');
 }
 
 //----------------------------------------------------
 //----------------------------------------------------
-$rows = [];
-$fileContent = array_slice($fileContent, 1); // novo array sem a primeira linha(cabeçalho do csv)
-foreach($fileContent as $content) {
+foreach(array_slice($fileContent, 1) as $content) { // novo array sem a primeira linha(cabeçalho do csv)
     $rows[] = trim($content);
 }
 
-// converte os dados para classe
+// converte os dados para classe(DTO)
 foreach($rows as $row) {
-    if(!empty($row)) { // verifica se no meio do arquivo existe linhas vazias
-        $l = explode(';', $row);
-        $nome = $l[0];
-        $categoria = $l[4];
-        $telefone = $l[1];
-        $endereco = $l[2];
-        $link = $l[3];
-        $horario = $l[5];
-    
+    if(empty($row)) { // verifica se no meio do arquivo existe linhas vazias
+        exit('Existe outra linha vazia pelo meio do arquivo.');
+    } else {
+        $col = explode(';', $row);
+
+        $nome       = $col[0];
+        $categoria  = $col[4];
+        $telefone   = $col[1];
+        $endereco   = $col[2];
+        $link       = $col[3];
+        $horario    = $col[5];
+
         $comercios[] = new CsvDto(
-            nome:$nome,
-            categoria:$categoria, 
-            telefone:$telefone, 
-            endereco:$endereco, 
-            link:$link, 
-            horario:$horario
-        );
+            nome:       $nome,
+            categoria:  $categoria,
+            telefone:   $telefone,
+            endereco:   $endereco,
+            link:       $link,
+            horario:    $horario
+        )
+
     }
 }
 

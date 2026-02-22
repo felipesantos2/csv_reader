@@ -1,4 +1,0 @@
-> https://stackoverflow.com/questions/8684609/where-can-i-find-php-ini
-
-> docker run --rm csvreader php --ini | grep 'php.ini'
-> docker run --rm csvreader php -i | grep 'php.ini'

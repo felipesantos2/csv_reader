@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 readonly class CsvDto
@@ -10,6 +11,5 @@ readonly class CsvDto
         public ?string $endereco = null,
         public ?string $link = null,
         public ?string $horario = null,
-    ) {
-    }
+    ) {}
 }
