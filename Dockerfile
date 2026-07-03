@@ -16,6 +16,7 @@ RUN apk add bash --no-cache \
 
 # add composer and php extensions
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-20-04
+
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 ARG HASH=$(curl -sS https://composer.github.io/installer.sig)
 RUN php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
